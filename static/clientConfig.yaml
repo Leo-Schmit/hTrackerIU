@@ -1,0 +1,5 @@
+npmName: habitTracker
+npmRepository: habitTracker
+supportsES6: true
+platform: browser
+npmVersion: 1.0.0
