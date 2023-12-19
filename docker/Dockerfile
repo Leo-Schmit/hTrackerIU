@@ -1,7 +1,7 @@
 FROM python:3.12-alpine as base
 
-ENV PYTHONPYCACHEPREFIX=./.pycache
-ENV PYTHONPATH=/app/src
+ENV PYTHONPYCACHEPREFIX ./.pycache
+ENV PYTHONPATH "${PYTHONPATH}:/app/src"
 
 WORKDIR /app
 COPY requirements.txt .
