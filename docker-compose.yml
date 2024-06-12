@@ -1,0 +1,70 @@
+version: "3.8"
+
+services:
+  htracker-iu:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: production
+    volumes:
+      - .:/app
+    ports:
+      - "${PORT:-8095}:${PORT:-8095}"
+    environment:
+      - ENV
+      - PORT=${PORT:-8095}
+      - REACT_APP_PORT=${REACT_APP_PORT:-3000}
+    command: python3 run.py
+
+  init-db:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: production
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: sh -c "python -m src.hTrackerIU.init_db"
+
+  test:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: tester
+    volumes:
+      - .:/app
+    command: pytest --color=yes -vv
+
+  client-download:
+    image: curlimages/curl:latest
+    command: sh -c "until curl -f http://htracker-iu:${PORT:-8095}/openapi.json -o /local/.openapi.json; do sleep 1; done"
+    volumes:
+      - .:/local
+    depends_on:
+      - htracker-iu
+
+  openapi-generator:
+    image: openapitools/openapi-generator-cli
+    volumes:
+      - .:/local
+    command: generate -i /local/.openapi.json -g typescript-axios -o /local/static/src/client --additional-properties=supportsES6=true,platform=browser
+    depends_on:
+      - client-download
+
+  frontend:
+    image: node:20-slim
+    volumes:
+      - .:/local
+    working_dir: /local/static
+    ports:
+      - "${REACT_APP_PORT:-3000}:${REACT_APP_PORT:-3000}"
+    environment:
+      - REACT_APP_PORT=${REACT_APP_PORT:-3000}
+    command: sh -c "npm install && npm run start"
+
+  build-frontend:
+    image: node:20-slim
+    volumes:
+      - .:/local
+    working_dir: /local/static
+    command: sh -c "npm install && npm run build"

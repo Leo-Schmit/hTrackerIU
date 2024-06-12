@@ -1,0 +1,13 @@
+.vscode
+.pycache
+.openapi.json
+node_modules
+.DS_Store
+.venv
+.pytest_cache
+build
+dist
+hTrackerIU.egg-info
+__pycache__
+habit.db
+src/hTrackerIU/static/static/js
