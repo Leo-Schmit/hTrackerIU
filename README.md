@@ -3,6 +3,7 @@
 ```
 # pip3 install hTrackerIU
 # hTrackerIU
+open http://localhost:8095
 ```
 
 You can also download the source code and choose one of the three options:
@@ -11,19 +12,22 @@ You can also download the source code and choose one of the three options:
 
 ```
 # make start
+open http://localhost:8095
 ```
 
 #### Using Docker
 
 ```
 # docker compose run --rm init-db
-# docker compose up hTrackerIU
+# docker compose up -d htracker-iu
+open http://localhost:8095
 ```
 
 #### Using Python
 
 ```
 # python3 run.py
+open http://localhost:8095
 ```
 
 # How to use
