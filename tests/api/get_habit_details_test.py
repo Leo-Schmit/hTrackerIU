@@ -26,6 +26,7 @@ def test_get_habit_details(test_client: TestClient, db_session: Session):
     assert 'current_streak' in response_data
     assert 'longest_streak' in response_data
 
+
 def test_get_non_existent_habit(test_client):
     non_existent_habit_id = 99999
     response = test_client.get(f"/api/habits/{non_existent_habit_id}")

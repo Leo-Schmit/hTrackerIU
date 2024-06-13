@@ -22,8 +22,10 @@ def test_create_habit(test_client, db_session):
     assert created_habit.description == payload['description']
     assert created_habit.periodicity.value == payload['periodicity']
 
+
 def test_create_habit_with_invalid_data(test_client):
-    payload = {"description": "description", "periodicity": "INVALID_PERIODICITY"}
+    payload = {"description": "description",
+               "periodicity": "INVALID_PERIODICITY"}
     response = test_client.post("/api/habits/", json=payload)
 
     assert response.status_code == 422

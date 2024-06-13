@@ -10,6 +10,7 @@ def test_delete_habit(test_client, db_session, test_habits):
     deleted_habit = db_session.get(HabitModel, habit_to_delete.id)
     assert deleted_habit is None
 
+
 def test_delete_non_existent_habit(test_client):
     non_existent_habit_id = 99999
     response = test_client.delete(f"/api/habits/{non_existent_habit_id}")

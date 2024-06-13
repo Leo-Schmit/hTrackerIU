@@ -35,7 +35,8 @@ def list_habits(
     try:
         if periodicity:
             periodicity_enum = Periodicity(periodicity)
-            return analytics_service.list_habits_by_periodicity(periodicity_enum)
+            return analytics_service.list_habits_by_periodicity(
+                periodicity_enum)
         return habit_service.list_all_tracked_habits()
     except ValueError as e:
         raise HTTPException(
