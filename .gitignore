@@ -10,4 +10,3 @@ dist
 hTrackerIU.egg-info
 __pycache__
 habit.db
-src/hTrackerIU/static/static/js
